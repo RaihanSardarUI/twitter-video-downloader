@@ -1,5 +1,5 @@
 ---
-const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
+// No server-side variables needed
 ---
 
 <html lang="en">
@@ -12,12 +12,14 @@ const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
 		<meta name="description" content="Download videos from Twitter/X easily and quickly" />
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script>
-			tailwind.config = {
-				theme: {
-					extend: {
-						colors: {
-							twitter: '#1DA1F2',
-							'twitter-dark': '#1A91DA',
+			if (typeof tailwind !== 'undefined') {
+				tailwind.config = {
+					theme: {
+						extend: {
+							colors: {
+								twitter: '#1DA1F2',
+								'twitter-dark': '#1A91DA',
+							}
 						}
 					}
 				}
@@ -156,12 +158,12 @@ const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
 		<script>
 			const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
 			
-			document.getElementById('downloadForm').addEventListener('submit', async function(e) {
+			document.getElementById('downloadForm')?.addEventListener('submit', async function(e) {
 				e.preventDefault();
 				
-				const form = e.target;
-				const tweetUrl = form.tweetUrl.value.trim();
-				const adultContent = form.adultContent.checked;
+				const form = e.target as HTMLFormElement;
+				const tweetUrl = (form.elements.namedItem('tweetUrl') as HTMLInputElement)?.value.trim();
+				const adultContent = (form.elements.namedItem('adultContent') as HTMLInputElement)?.checked;
 				
 				if (!tweetUrl) {
 					showStatus('Please enter a valid tweet URL', 'error');
@@ -202,49 +204,55 @@ const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
 			});
 
 			
-			function setLoadingState(loading) {
+			function setLoadingState(loading: boolean) {
 				const btnText = document.getElementById('downloadBtnText');
 				const btnLoader = document.getElementById('downloadBtnLoader');
-				const submitBtn = document.querySelector('button[type="submit"]');
+				const submitBtn = document.querySelector('button[type="submit"]') as HTMLButtonElement;
 				
 				if (loading) {
-					btnText.classList.add('hidden');
-					btnLoader.classList.remove('hidden');
-					submitBtn.disabled = true;
-					submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+					btnText?.classList.add('hidden');
+					btnLoader?.classList.remove('hidden');
+					if (submitBtn) {
+						submitBtn.disabled = true;
+						submitBtn.classList.add('opacity-75', 'cursor-not-allowed');
+					}
 				} else {
-					btnText.classList.remove('hidden');
-					btnLoader.classList.add('hidden');
-					submitBtn.disabled = false;
-					submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+					btnText?.classList.remove('hidden');
+					btnLoader?.classList.add('hidden');
+					if (submitBtn) {
+						submitBtn.disabled = false;
+						submitBtn.classList.remove('opacity-75', 'cursor-not-allowed');
+					}
 				}
 			}
 			
-			function showStatus(message, type) {
+			function showStatus(message: string, type: string) {
 				const statusEl = document.getElementById('statusMessage');
 				const bgColor = type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800';
 				
-				statusEl.innerHTML = `
-					<div class="border-2 ${bgColor} rounded-xl p-4">
-						<p class="font-medium">${message}</p>
-					</div>
-				`;
-				statusEl.classList.remove('hidden');
-				
-				// Auto-hide success messages after 5 seconds
-				if (type === 'success') {
-					setTimeout(() => {
-						statusEl.classList.add('hidden');
-					}, 5000);
+				if (statusEl) {
+					statusEl.innerHTML = `
+						<div class="border-2 ${bgColor} rounded-xl p-4">
+							<p class="font-medium">${message}</p>
+						</div>
+					`;
+					statusEl.classList.remove('hidden');
+					
+					// Auto-hide success messages after 5 seconds
+					if (type === 'success') {
+						setTimeout(() => {
+							statusEl.classList.add('hidden');
+						}, 5000);
+					}
 				}
 			}
 			
-			function showDownloadResults(data) {
+			function showDownloadResults(data: any) {
 				const resultsEl = document.getElementById('downloadResults');
 				const videoInfoEl = document.getElementById('videoInfo');
 				
 				// Format file size
-				const formatFileSize = (bytes) => {
+				const formatFileSize = (bytes: number) => {
 					if (!bytes) return 'Unknown size';
 					const sizes = ['Bytes', 'KB', 'MB', 'GB'];
 					const i = Math.floor(Math.log(bytes) / Math.log(1024));
@@ -255,7 +263,7 @@ const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
 				
 				// Filter for MP4 formats only
 				const mp4Qualities = data.available_qualities ? 
-					data.available_qualities.filter(quality => {
+					data.available_qualities.filter((quality: any) => {
 						const format = (quality.format || quality.ext || '').toLowerCase();
 						return format === 'mp4' || format === '' || !format; // Include if MP4 or unknown (assuming MP4)
 					}) : [];
@@ -270,7 +278,7 @@ const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
 								<span class="ml-2 text-sm text-gray-500 font-normal">All formats optimized for compatibility</span>
 							</h4>
 							<div class="grid gap-3">
-								${mp4Qualities.map((quality, index) => `
+								${mp4Qualities.map((quality: any, index: number) => `
 									<div class="border ${index === 0 ? 'border-green-400 bg-green-50' : 'border-gray-200 bg-white'} rounded-lg p-4">
 										<div class="flex items-center justify-between mb-2">
 											<div class="flex items-center space-x-3">
@@ -385,13 +393,19 @@ const API_BASE_URL = 'https://twitter-api.rhnsardar4.workers.dev';
 					</div>
 				`;
 				
-				videoInfoEl.innerHTML = html;
-				resultsEl.classList.remove('hidden');
+				if (videoInfoEl) {
+					videoInfoEl.innerHTML = html;
+				}
+				if (resultsEl) {
+					resultsEl.classList.remove('hidden');
+				}
 			}
 			
 			function hideResults() {
 				const resultsEl = document.getElementById('downloadResults');
-				resultsEl.classList.add('hidden');
+				if (resultsEl) {
+					resultsEl.classList.add('hidden');
+				}
 			}
 		</script>
 	</body>

@@ -5,7 +5,7 @@ import type { APIRoute } from 'astro';
 
 export const POST: APIRoute = async ({ request }) => {
   try {
-    const { url, adult } = await request.json();
+    const { url } = await request.json();
     
     // Basic URL validation
     if (!url || (!url.includes('twitter.com') && !url.includes('x.com'))) {
