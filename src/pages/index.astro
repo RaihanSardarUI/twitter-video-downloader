@@ -12,8 +12,9 @@
 		<meta name="description" content="Download videos from Twitter/X easily and quickly" />
 		<script src="https://cdn.tailwindcss.com"></script>
 		<script>
-			if (typeof tailwind !== 'undefined') {
-				tailwind.config = {
+			// Configure Tailwind CSS with custom colors
+			if (typeof window !== 'undefined' && (window as any).tailwind) {
+				(window as any).tailwind.config = {
 					theme: {
 						extend: {
 							colors: {
