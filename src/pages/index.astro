@@ -143,6 +143,12 @@
 		<script>
 			const API_BASE_URL = import.meta.env.PUBLIC_API_BASE_URL;
 			
+			// Check if API_BASE_URL is defined
+			if (!API_BASE_URL) {
+				console.error('PUBLIC_API_BASE_URL environment variable is not set!');
+				alert('Configuration error: API URL not set. Please contact the administrator.');
+			}
+			
 			document.getElementById('downloadForm')?.addEventListener('submit', async function(e) {
 				e.preventDefault();
 				
