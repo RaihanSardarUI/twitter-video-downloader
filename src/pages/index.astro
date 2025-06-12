@@ -10,15 +10,31 @@
 		<meta name="generator" content={Astro.generator} />
 		<title>Twitter Video Downloader</title>
 		<meta name="description" content="Download videos from Twitter/X easily and quickly" />
+		<style>
+			.text-twitter { color: #1DA1F2; }
+			.bg-twitter { background-color: #1DA1F2; }
+			.border-twitter { border-color: #1DA1F2; }
+			.hover\:from-twitter-dark:hover { background-image: linear-gradient(to right, #0C85E8, var(--tw-gradient-to)); }
+			.hover\:to-twitter:hover { background-image: linear-gradient(var(--tw-gradient-from), #1DA1F2); }
+			.from-twitter { background-image: linear-gradient(to right, #1DA1F2, var(--tw-gradient-to)); }
+			.to-twitter-dark { background-image: linear-gradient(var(--tw-gradient-from), #0C85E8); }
+			.focus\:ring-twitter:focus { --tw-ring-color: #1DA1F2; }
+			
+			/* Mobile-first improvements */
+			@media (max-width: 640px) {
+				.container { padding-left: 0.75rem; padding-right: 0.75rem; }
+				input[type="url"] { font-size: 16px; } /* Prevent zoom on iOS */
+			}
+		</style>
 	</head>
 	<body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-		<div class="container mx-auto px-4 py-8">
+		<div class="container mx-auto px-3 sm:px-4 py-4 sm:py-8">
 			<!-- Header -->
-			<div class="text-center mb-12">
-				<h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-4">
+			<div class="text-center mb-8 sm:mb-12">
+				<h1 class="text-3xl sm:text-4xl md:text-6xl font-bold text-gray-800 mb-3 sm:mb-4 leading-tight">
 					<span class="text-twitter">Twitter</span> Video Downloader
 				</h1>
-				<p class="text-xl text-gray-600 max-w-2xl mx-auto">
+				<p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto px-2 leading-relaxed">
 					Download videos from Twitter/X in <span class="font-semibold text-blue-600">MP4 format only</span>. Get the best quality automatically or choose from <span class="font-semibold text-green-600">all available MP4 resolutions</span>!
 				</p>
 			</div>
@@ -26,10 +42,10 @@
 			<!-- Main Content -->
 			<div class="max-w-4xl mx-auto">
 				<!-- Download Form -->
-				<div class="bg-white rounded-3xl shadow-2xl p-8 md:p-12 mb-8">
-					<form id="downloadForm" class="space-y-6">
+				<div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8 md:p-12 mb-6 sm:mb-8">
+					<form id="downloadForm" class="space-y-4 sm:space-y-6">
 						<div>
-							<label for="tweetUrl" class="block text-lg font-semibold text-gray-700 mb-3">
+							<label for="tweetUrl" class="block text-base sm:text-lg font-semibold text-gray-700 mb-2 sm:mb-3">
 								Tweet URL
 							</label>
 							<input
@@ -37,33 +53,33 @@
 								id="tweetUrl"
 								name="tweetUrl"
 								placeholder="https://x.com/user/status/123456789"
-								class="w-full px-6 py-4 text-lg border-2 border-gray-200 rounded-xl focus:border-twitter focus:ring-2 focus:ring-twitter/20 outline-none transition-all duration-200"
+								class="w-full px-4 sm:px-6 py-3 sm:py-4 text-base sm:text-lg border-2 border-gray-200 rounded-lg sm:rounded-xl focus:border-twitter focus:ring-2 focus:ring-twitter/20 outline-none transition-all duration-200"
 								required
 							/>
 						</div>
 						
-						<div class="space-y-4">
-							<div class="flex items-center space-x-4">
+						<div class="space-y-3 sm:space-y-4">
+							<div class="flex items-center space-x-3 sm:space-x-4">
 								<input
 									type="checkbox"
 									id="adultContent"
 									name="adultContent"
-									class="w-5 h-5 text-twitter border-2 border-gray-300 rounded focus:ring-twitter"
+									class="w-4 h-4 sm:w-5 sm:h-5 text-twitter border-2 border-gray-300 rounded focus:ring-twitter"
 								/>
-								<label for="adultContent" class="text-gray-700 font-medium">
+								<label for="adultContent" class="text-sm sm:text-base text-gray-700 font-medium">
 									Allow adult content
 								</label>
 							</div>
 							
-							<div class="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-4">
-								<div class="text-blue-800 text-sm space-y-2">
-									<div class="flex items-center">
-										<svg class="w-4 h-4 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<div class="bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-lg p-3 sm:p-4">
+								<div class="text-blue-800 text-xs sm:text-sm space-y-2">
+									<div class="flex items-start sm:items-center">
+										<svg class="w-4 h-4 mr-2 text-blue-600 mt-0.5 sm:mt-0 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 										</svg>
 										<strong>MP4-Only Mode:</strong> Get all available MP4 qualities only!
 									</div>
-									<div class="ml-6 text-xs text-gray-600">
+									<div class="ml-6 text-xs text-gray-600 leading-relaxed">
 										🎬 MP4 format guaranteed • 🏆 Best MP4 auto-selected • 📊 All MP4 options displayed • ⚡ Universal compatibility
 									</div>
 								</div>
@@ -72,7 +88,7 @@
 
 						<button
 							type="submit"
-							class="w-full bg-gradient-to-r from-twitter to-twitter-dark hover:from-twitter-dark hover:to-twitter text-white font-bold py-4 px-8 rounded-xl text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+							class="w-full bg-gradient-to-r from-twitter to-twitter-dark hover:from-twitter-dark hover:to-twitter text-white font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg sm:rounded-xl text-base sm:text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-lg active:scale-95 touch-manipulation"
 						>
 							<span id="downloadBtnText">🎬 Get All MP4 Qualities</span>
 							<div id="downloadBtnLoader" class="hidden">
@@ -89,51 +105,53 @@
 				<div id="statusMessage" class="hidden mb-8"></div>
 
 				<!-- Download Results -->
-				<div id="downloadResults" class="hidden bg-white rounded-3xl shadow-2xl p-8 md:p-12">
-					<h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-						🎬 MP4 Qualities Ready!
-						<span class="ml-3 text-sm font-normal text-gray-500">Best MP4 + all alternatives</span>
+				<div id="downloadResults" class="hidden bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-8 md:p-12">
+					<h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4 sm:mb-6">
+						<div class="flex flex-col sm:flex-row sm:items-center">
+							<span>🎬 MP4 Qualities Ready!</span>
+							<span class="text-xs sm:text-sm font-normal text-gray-500 mt-1 sm:mt-0 sm:ml-3">Best MP4 + all alternatives</span>
+						</div>
 					</h2>
-					<div id="videoInfo" class="space-y-4"></div>
+					<div id="videoInfo" class="space-y-3 sm:space-y-4"></div>
 				</div>
 
 
 
 				<!-- Features Section -->
-				<div class="grid md:grid-cols-3 gap-8 mt-16">
+				<div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mt-12 sm:mt-16">
 					<div class="text-center">
-						<div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-							<div class="w-16 h-16 bg-twitter/10 rounded-full flex items-center justify-center mx-auto mb-4">
-								<svg class="w-8 h-8 text-twitter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<div class="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+							<div class="w-12 h-12 sm:w-16 sm:h-16 bg-twitter/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+								<svg class="w-6 h-6 sm:w-8 sm:h-8 text-twitter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
 								</svg>
 							</div>
-							<h3 class="text-xl font-semibold text-gray-800 mb-2">Fast Downloads</h3>
-							<p class="text-gray-600">Get your videos in seconds with our optimized API</p>
+							<h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Fast Downloads</h3>
+							<p class="text-sm sm:text-base text-gray-600 leading-relaxed">Get your videos in seconds with our optimized API</p>
 						</div>
 					</div>
 					
 					<div class="text-center">
-						<div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-							<div class="w-16 h-16 bg-twitter/10 rounded-full flex items-center justify-center mx-auto mb-4">
-								<svg class="w-8 h-8 text-twitter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<div class="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+							<div class="w-12 h-12 sm:w-16 sm:h-16 bg-twitter/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+								<svg class="w-6 h-6 sm:w-8 sm:h-8 text-twitter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 								</svg>
 							</div>
-							<h3 class="text-xl font-semibold text-gray-800 mb-2">MP4 Only</h3>
-							<p class="text-gray-600">Universal MP4 format with all available resolutions</p>
+							<h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">MP4 Only</h3>
+							<p class="text-sm sm:text-base text-gray-600 leading-relaxed">Universal MP4 format with all available resolutions</p>
 						</div>
 					</div>
 					
-					<div class="text-center">
-						<div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
-							<div class="w-16 h-16 bg-twitter/10 rounded-full flex items-center justify-center mx-auto mb-4">
-								<svg class="w-8 h-8 text-twitter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<div class="text-center sm:col-span-2 lg:col-span-1">
+						<div class="bg-white rounded-xl sm:rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-xl transition-shadow duration-300">
+							<div class="w-12 h-12 sm:w-16 sm:h-16 bg-twitter/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+								<svg class="w-6 h-6 sm:w-8 sm:h-8 text-twitter" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
 								</svg>
 							</div>
-							<h3 class="text-xl font-semibold text-gray-800 mb-2">Secure & Private</h3>
-							<p class="text-gray-600">Your data is safe and never stored on our servers</p>
+							<h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2">Secure & Private</h3>
+							<p class="text-sm sm:text-base text-gray-600 leading-relaxed">Your data is safe and never stored on our servers</p>
 						</div>
 					</div>
 				</div>
@@ -264,35 +282,37 @@
 				if (mp4Qualities.length > 0) {
 					qualitiesHtml = `
 						<div class="mt-6">
-							<h4 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
-								🎬 MP4 Quality Options (${mp4Qualities.length})
-								<span class="ml-2 text-sm text-gray-500 font-normal">All formats optimized for compatibility</span>
+							<h4 class="text-base sm:text-lg font-semibold text-gray-800 mb-3 sm:mb-4">
+								<div class="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+									<span>🎬 MP4 Quality Options (${mp4Qualities.length})</span>
+									<span class="text-xs sm:text-sm text-gray-500 font-normal">All formats optimized for compatibility</span>
+								</div>
 							</h4>
-							<div class="grid gap-3">
+							<div class="grid gap-2 sm:gap-3">
 								${mp4Qualities.map((quality: any, index: number) => `
-									<div class="border ${index === 0 ? 'border-green-400 bg-green-50' : 'border-gray-200 bg-white'} rounded-lg p-4">
-										<div class="flex items-center justify-between mb-2">
-											<div class="flex items-center space-x-3">
-												${index === 0 ? '<div class="text-green-600 font-bold text-sm">🏆 BEST MP4</div>' : ''}
-												<div class="font-semibold text-gray-800">${quality.quality || quality.resolution || 'Unknown'}</div>
-												<div class="text-sm text-blue-600 font-medium">MP4</div>
+									<div class="border ${index === 0 ? 'border-green-400 bg-green-50' : 'border-gray-200 bg-white'} rounded-lg p-3 sm:p-4">
+										<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-2 sm:mb-2 gap-2 sm:gap-0">
+											<div class="flex flex-wrap items-center gap-2 sm:gap-3">
+												${index === 0 ? '<div class="text-green-600 font-bold text-xs sm:text-sm">🏆 BEST MP4</div>' : ''}
+												<div class="font-semibold text-gray-800 text-sm sm:text-base">${quality.quality || quality.resolution || 'Unknown'}</div>
+												<div class="text-xs sm:text-sm text-blue-600 font-medium">MP4</div>
 											</div>
-											<div class="text-sm text-gray-500">${formatFileSize(quality.filesize || quality.file_size)}</div>
+											<div class="text-xs sm:text-sm text-gray-500">${formatFileSize(quality.filesize || quality.file_size)}</div>
 										</div>
-										<div class="flex items-center justify-between">
-											<div class="text-xs text-gray-500 space-x-4">
+										<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+											<div class="flex flex-wrap gap-2 sm:gap-4 text-xs text-gray-500">
 												${quality.bitrate ? `<span>📈 ${quality.bitrate} kbps</span>` : ''}
 												${quality.fps ? `<span>🎯 ${quality.fps} fps</span>` : ''}
 												${quality.vbr ? `<span>📹 ${quality.vbr} kbps</span>` : ''}
 												${quality.abr ? `<span>🔊 ${quality.abr} kbps audio</span>` : ''}
 											</div>
-											<div class="flex space-x-2">
+											<div class="flex gap-2 mt-2 sm:mt-0">
 												<a href="${quality.url}" download="${quality.filename || data.filename}" 
-													 class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded transition-colors">
+													 class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-3 py-2 rounded transition-colors touch-manipulation flex-1 sm:flex-none text-center">
 													📥 Download MP4
 												</a>
 												<a href="${quality.url}" target="_blank" 
-													 class="text-xs bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded transition-colors">
+													 class="text-xs bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded transition-colors touch-manipulation flex-1 sm:flex-none text-center">
 													🔗 Open
 												</a>
 											</div>
@@ -322,29 +342,29 @@
 				}
 				
 				const html = `
-					<div class="border-2 border-gray-200 rounded-xl p-6 mb-6">
-						<div class="flex items-start space-x-4 mb-4">
-							${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video thumbnail" class="w-20 h-20 rounded-lg object-cover flex-shrink-0" />` : ''}
-							<div class="flex-1">
-								<h3 class="text-xl font-semibold text-gray-800 mb-2">${data.title ? (data.title.split(' ').length > 5 ? data.title.split(' ').slice(0, 5).join(' ') + '...' : data.title) : 'No title'}</h3>
-								<div class="flex flex-wrap gap-4 text-sm text-gray-500">
-									${data.uploader ? `<span>👤 ${data.uploader}</span>` : ''}
-									${data.duration_formatted !== 'Unknown' ? `<span>⏱️ ${data.duration_formatted}</span>` : ''}
-									${data.view_count ? `<span>👁️ ${data.view_count.toLocaleString()} views</span>` : ''}
-									${data.like_count ? `<span>❤️ ${data.like_count.toLocaleString()} likes</span>` : ''}
+					<div class="border-2 border-gray-200 rounded-lg sm:rounded-xl p-4 sm:p-6 mb-4 sm:mb-6">
+						<div class="flex items-start space-x-3 sm:space-x-4 mb-3 sm:mb-4">
+							${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video thumbnail" class="w-16 h-16 sm:w-20 sm:h-20 rounded-lg object-cover flex-shrink-0" />` : ''}
+							<div class="flex-1 min-w-0">
+								<h3 class="text-lg sm:text-xl font-semibold text-gray-800 mb-2 break-words">${data.title ? (data.title.split(' ').length > 5 ? data.title.split(' ').slice(0, 5).join(' ') + '...' : data.title) : 'No title'}</h3>
+								<div class="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-gray-500">
+									${data.uploader ? `<span class="flex items-center">👤 ${data.uploader}</span>` : ''}
+									${data.duration_formatted !== 'Unknown' ? `<span class="flex items-center">⏱️ ${data.duration_formatted}</span>` : ''}
+									${data.view_count ? `<span class="flex items-center">👁️ ${data.view_count.toLocaleString()} views</span>` : ''}
+									${data.like_count ? `<span class="flex items-center">❤️ ${data.like_count.toLocaleString()} likes</span>` : ''}
 								</div>
 							</div>
 						</div>
 						
 						<!-- Format Analysis Stats -->
-						<div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 mb-4">
-							<div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-								<div><span class="font-medium">🏆 Best Quality:</span> <span class="text-green-600 font-semibold">${data.quality}</span></div>
-								<div><span class="font-medium">📁 Format:</span> ${data.format}</div>
-								<div><span class="font-medium">📊 File Size:</span> ${formatFileSize(data.file_size)}</div>
-								<div><span class="font-medium">🎬 MP4 Options:</span> <span class="text-purple-600 font-semibold">${data.mp4_formats_found || 0}</span></div>
+						<div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+							<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-4 text-xs sm:text-sm">
+								<div class="break-words"><span class="font-medium">🏆 Best Quality:</span> <span class="text-green-600 font-semibold">${data.quality}</span></div>
+								<div class="break-words"><span class="font-medium">📁 Format:</span> ${data.format}</div>
+								<div class="break-words"><span class="font-medium">📊 File Size:</span> ${formatFileSize(data.file_size)}</div>
+								<div class="break-words"><span class="font-medium">🎬 MP4 Options:</span> <span class="text-purple-600 font-semibold">${data.mp4_formats_found || 0}</span></div>
 							</div>
-							<div class="mt-3 text-xs text-gray-600 space-x-4">
+							<div class="mt-2 sm:mt-3 text-xs text-gray-600 flex flex-wrap gap-2 sm:gap-4">
 								${data.total_formats_found ? `<span>🔍 ${data.total_formats_found} total formats found</span>` : ''}
 								<span>🎯 Smart ranking by resolution → bitrate → fps</span>
 								<span>⚡ ${data.content_rating}</span>
@@ -352,32 +372,33 @@
 						</div>
 						
 						<!-- Quick Download Best Quality -->
-						<div class="flex flex-col sm:flex-row gap-4 mb-4">
+						<div class="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-3 sm:mb-4">
 							<a
 								href="${data.download_url}"
 								download="${data.filename}"
-								class="flex-1 inline-flex items-center justify-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-3 px-6 rounded-lg transition-all duration-200 transform hover:scale-105"
+								class="flex-1 inline-flex items-center justify-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-medium py-3 px-4 sm:px-6 rounded-lg transition-all duration-200 transform hover:scale-105 active:scale-95 touch-manipulation text-sm sm:text-base"
 							>
-								<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
 								</svg>
-								🏆 Download Best Quality (${data.quality})
+								<span class="truncate">🏆 Download Best Quality (${data.quality})</span>
 							</a>
 							<a
 								href="${data.download_url}"
 								target="_blank"
-								class="inline-flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200"
+								class="inline-flex items-center justify-center bg-gray-500 hover:bg-gray-600 text-white font-medium py-3 px-4 sm:px-6 rounded-lg transition-colors duration-200 touch-manipulation text-sm sm:text-base min-w-0"
 							>
-								<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+								<svg class="w-4 h-4 sm:w-5 sm:h-5 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
 								</svg>
-								🔗 Open Best Quality
+								<span class="hidden sm:inline">🔗 Open Best Quality</span>
+								<span class="sm:hidden">🔗 Open</span>
 							</a>
 						</div>
 						
 						${qualitiesHtml}
 						
-						<div class="mt-4 text-xs text-gray-500 border-t pt-3">
+						<div class="mt-3 sm:mt-4 text-xs text-gray-500 border-t pt-2 sm:pt-3 break-words">
 							⚠️ All download links expire at: ${expirationDate}
 						</div>
 					</div>
