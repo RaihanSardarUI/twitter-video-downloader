@@ -141,7 +141,7 @@
 		</div>
 
 		<script>
-			const API_BASE_URL = 'https://apitest.rdownload.org';
+			const API_BASE_URL = import.meta.env.PUBLIC_API_BASE_URL;
 			
 			document.getElementById('downloadForm')?.addEventListener('submit', async function(e) {
 				e.preventDefault();
