@@ -326,7 +326,7 @@
 						<div class="flex items-start space-x-4 mb-4">
 							${data.thumbnail ? `<img src="${data.thumbnail}" alt="Video thumbnail" class="w-20 h-20 rounded-lg object-cover flex-shrink-0" />` : ''}
 							<div class="flex-1">
-								<h3 class="text-xl font-semibold text-gray-800 mb-2">${data.title}</h3>
+								<h3 class="text-xl font-semibold text-gray-800 mb-2">${data.title ? (data.title.split(' ').length > 5 ? data.title.split(' ').slice(0, 5).join(' ') + '...' : data.title) : 'No title'}</h3>
 								<div class="flex flex-wrap gap-4 text-sm text-gray-500">
 									${data.uploader ? `<span>👤 ${data.uploader}</span>` : ''}
 									${data.duration_formatted !== 'Unknown' ? `<span>⏱️ ${data.duration_formatted}</span>` : ''}
