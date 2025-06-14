@@ -82,7 +82,8 @@ export const formatFileSize = (bytes: number): string => {
 export const getApiBaseUrl = (): string => {
   const apiUrl = import.meta.env.PUBLIC_API_BASE_URL;
   if (!apiUrl) {
-    throw new Error('PUBLIC_API_BASE_URL environment variable is not set!');
+    // Fallback to relative URL if environment variable is not set
+    return '/api';
   }
   return apiUrl;
 };
