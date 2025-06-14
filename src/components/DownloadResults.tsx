@@ -8,6 +8,7 @@ interface DownloadResultsProps {
 }
 
 export const DownloadResults: React.FC<DownloadResultsProps> = ({ data }) => {
+  const expirationDate = new Date(data.expires_at * 1000).toLocaleString();
   
   // Filter for MP4 formats only - exclude m3u8 and other streaming formats
   const mp4Qualities = data.available_qualities ? 
