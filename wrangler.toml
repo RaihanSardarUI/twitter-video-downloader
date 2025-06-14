@@ -21,7 +21,6 @@ bucket_name = "twitter-videos-storage"
 # Environment configuration
 [env.production]
 compatibility_date = "2024-01-01"
-node_compat = true
 
 # D1 Database binding
 [[env.production.d1_databases]]
@@ -46,7 +45,6 @@ ENVIRONMENT = "production"
 # Preview environment (for testing)
 [env.preview]
 compatibility_date = "2024-01-01"
-node_compat = true
 
 [[env.preview.d1_databases]]
 binding = "DB"
@@ -64,15 +62,5 @@ id = "your-preview-kv-namespace-id" # Replace with preview KV namespace ID
 [env.preview.vars]
 ENVIRONMENT = "preview"
 
-# Cron triggers for trending updates (production only)
-[[env.production.triggers.crons]]
-cron = "*/15 * * * *" # Every 15 minutes
-route = "/api/cron/update-views"
-
-[[env.production.triggers.crons]]
-cron = "0 * * * *" # Every hour
-route = "/api/cron/calculate-trending"
-
-[[env.production.triggers.crons]]
-cron = "0 */6 * * *" # Every 6 hours
-route = "/api/cron/refresh-cache" 
+# Note: Cron triggers will be configured separately in Cloudflare Pages
+# They are not supported in wrangler.toml for Pages projects 
