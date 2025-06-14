@@ -6,7 +6,20 @@ import cloudflare from '@astrojs/cloudflare';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), react()],
+  integrations: [
+    tailwind(), 
+    react({
+      experimentalReactChildren: false
+    })
+  ],
   output: 'hybrid',
-  adapter: cloudflare()
+  adapter: cloudflare(),
+  vite: {
+    define: {
+      global: 'globalThis',
+    },
+    ssr: {
+      external: ['node:buffer', 'node:process', 'node:util']
+    }
+  }
 });

@@ -9,7 +9,7 @@ interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>
 
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className = '', label, description, variant = 'default', id, ...props }, ref) => {
-    const checkboxId = id || `checkbox-${Math.random().toString(36).substr(2, 9)}`
+    const checkboxId = id || `checkbox-${Math.random().toString(36).substring(2, 11)}`
     
     const variantClasses = {
       default: {

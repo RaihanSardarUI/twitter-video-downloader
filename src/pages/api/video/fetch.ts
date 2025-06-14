@@ -4,7 +4,7 @@ import type { VideoData } from '../../../lib/utils';
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { url, is_adult_content, is_non_adult_content } = body;
+    const { url, is_adult_content } = body;
 
     if (!url) {
       return new Response(JSON.stringify({

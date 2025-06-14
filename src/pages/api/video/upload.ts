@@ -64,12 +64,9 @@ export const POST: APIRoute = async ({ request }) => {
     // Check if video already exists in R2 (using Cloudflare binding)
     const r2Bucket = (globalThis as any).VIDEOS; // R2 binding
     
-    let duplicate = false;
     try {
       const existingObject = await r2Bucket.head(r2Key);
       if (existingObject) {
-        duplicate = true;
-        
         // Update download count in database if exists
         const db = (globalThis as any).DB; // D1 binding
         if (db) {
