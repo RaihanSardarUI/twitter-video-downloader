@@ -7,7 +7,10 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "worker:dev": "wrangler dev",
+    "worker:deploy": "wrangler deploy",
+    "db:migrate": "wrangler d1 execute twitter-reels-db --file=schema.sql --remote"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^11.2.0",
@@ -28,9 +31,9 @@
     "typescript": "^5.0.0"
   },
   "optionalDependencies": {
-    "@rollup/rollup-linux-x64-gnu": "^4.0.0",
-    "@rollup/rollup-win32-x64-msvc": "^4.0.0",
+    "@rollup/rollup-darwin-arm64": "^4.0.0",
     "@rollup/rollup-darwin-x64": "^4.0.0",
-    "@rollup/rollup-darwin-arm64": "^4.0.0"
+    "@rollup/rollup-linux-x64-gnu": "^4.0.0",
+    "@rollup/rollup-win32-x64-msvc": "^4.0.0"
   }
 }

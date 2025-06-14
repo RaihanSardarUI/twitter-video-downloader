@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import { VideoData, getApiEndpoint, getFallbackApiEndpoints, getApiConfig } from '@/lib/utils';
+
+interface ApiResponse extends VideoData {
+  trending?: {
+    isDuplicate: boolean;
+    downloadCount: number;
+    message: string;
+  };
+}
 import { DownloadForm } from './DownloadForm';
 import { StatusMessage } from './StatusMessage';
 import { DownloadResults } from './DownloadResults';
@@ -64,7 +72,7 @@ export const TwitterVideoDownloader: React.FC = () => {
         }
       }
 
-      const data = await response.json();
+      const data = await response.json() as ApiResponse;
 
       if (response.ok && data.success) {
         setVideoData(data);

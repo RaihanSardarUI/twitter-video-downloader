@@ -1,5 +1,6 @@
 ---
 import { TwitterVideoDownloader } from '../components/TwitterVideoDownloader';
+import { TrendingSection } from '../components/TrendingSection';
 ---
 
 <html lang="en">
@@ -12,6 +13,9 @@ import { TwitterVideoDownloader } from '../components/TwitterVideoDownloader';
 		<meta name="description" content="Download videos from Twitter/X easily and quickly" />
 	</head>
 	<body>
-		<TwitterVideoDownloader client:load />
+		<div class="min-h-screen bg-gray-50">
+			<TwitterVideoDownloader client:load />
+			<TrendingSection client:load />
+		</div>
 	</body>
 </html>

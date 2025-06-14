@@ -1,0 +1,32 @@
+name = "twitter-video-downloader"
+main = "src/worker.ts"
+compatibility_date = "2024-06-14"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "twitter-reels-db"
+database_id = "750ee1d3-c1fd-4b1e-953d-b4295b17003c"
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "4e8e32b2971b43ef836b8ac7c4e9a96b"
+
+[[r2_buckets]]
+binding = "VIDEOS"
+bucket_name = "twitter-videos-storage"
+
+[env.production]
+name = "twitter-video-downloader"
+
+[[env.production.d1_databases]]
+binding = "DB"
+database_name = "twitter-reels-db"
+database_id = "750ee1d3-c1fd-4b1e-953d-b4295b17003c"
+
+[[env.production.kv_namespaces]]
+binding = "CACHE"
+id = "4e8e32b2971b43ef836b8ac7c4e9a96b"
+
+[[env.production.r2_buckets]]
+binding = "VIDEOS"
+bucket_name = "twitter-videos-storage" 
