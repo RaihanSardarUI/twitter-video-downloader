@@ -11,8 +11,12 @@
     "checkJs": false,
     "strict": true,
     "skipLibCheck": true,
-    "jsx": "preserve",
-    "jsxImportSource": "astro"
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*",

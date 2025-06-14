@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Twitter styles */
+.text-twitter { 
+  color: #1DA1F2; 
+}
+
+.bg-twitter { 
+  background-color: #1DA1F2; 
+}
+
+.border-twitter { 
+  border-color: #1DA1F2; 
+}
+
+.hover\:from-twitter-dark:hover { 
+  background-image: linear-gradient(to right, #0C85E8, var(--tw-gradient-to)); 
+}
+
+.hover\:to-twitter:hover { 
+  background-image: linear-gradient(var(--tw-gradient-from), #1DA1F2); 
+}
+
+.from-twitter { 
+  background-image: linear-gradient(to right, #1DA1F2, var(--tw-gradient-to)); 
+}
+
+.to-twitter-dark { 
+  background-image: linear-gradient(var(--tw-gradient-from), #0C85E8); 
+}
+
+.focus\:ring-twitter:focus { 
+  --tw-ring-color: #1DA1F2; 
+}
+
+/* Mobile-first improvements */
+@media (max-width: 640px) {
+  .container { 
+    padding-left: 0.75rem; 
+    padding-right: 0.75rem; 
+  }
+  
+  input[type="url"] { 
+    font-size: 16px; /* Prevent zoom on iOS */
+  }
+} 
