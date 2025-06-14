@@ -1,3 +1,5 @@
+import apiConfig from '../config/api.json';
+
 export interface VideoData {
   success: boolean;
   title?: string;
@@ -42,9 +44,20 @@ export const formatFileSize = (bytes: number): string => {
 };
 
 export const getApiBaseUrl = (): string => {
-  const apiUrl = import.meta.env.PUBLIC_API_BASE_URL;
-  if (!apiUrl) {
-    throw new Error('PUBLIC_API_BASE_URL environment variable is not set!');
-  }
-  return apiUrl;
+  return apiConfig.apiBaseUrl;
+};
+
+export const getApiEndpoint = (endpoint: keyof typeof apiConfig.endpoints): string => {
+  return `${apiConfig.apiBaseUrl}${apiConfig.endpoints[endpoint]}`;
+};
+
+export const getFallbackApiEndpoints = (endpoint: keyof typeof apiConfig.endpoints): string[] => {
+  return apiConfig.fallbackApiUrls.map(url => `${url}${apiConfig.endpoints[endpoint]}`);
+};
+
+export const getApiConfig = () => {
+  return {
+    timeout: apiConfig.timeout,
+    retryAttempts: apiConfig.retryAttempts
+  };
 }; 

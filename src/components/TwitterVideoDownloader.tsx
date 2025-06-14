@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { VideoData, getApiBaseUrl } from '@/lib/utils';
+import { VideoData, getApiEndpoint, getFallbackApiEndpoints, getApiConfig } from '@/lib/utils';
 import { DownloadForm } from './DownloadForm';
 import { StatusMessage } from './StatusMessage';
 import { DownloadResults } from './DownloadResults';
@@ -20,18 +20,49 @@ export const TwitterVideoDownloader: React.FC = () => {
     setVideoData(null);
     
     try {
-      const apiBaseUrl = getApiBaseUrl();
-      const response = await fetch(`${apiBaseUrl}/video/fetch`, {
+      const config = getApiConfig();
+      const primaryEndpoint = getApiEndpoint('videoFetch');
+      
+      const requestBody = JSON.stringify({
+        url: url,
+        is_adult_content: adultContent,
+        is_non_adult_content: nonAdultContent
+      });
+
+      // Try primary API endpoint first
+      let response = await fetch(primaryEndpoint, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          url: url,
-          is_adult_content: adultContent,
-          is_non_adult_content: nonAdultContent
-        })
+        body: requestBody,
+        signal: AbortSignal.timeout(config.timeout)
       });
+
+      // If primary fails with 404, try fallback endpoints
+      if (!response.ok && response.status === 404) {
+        const fallbackEndpoints = getFallbackApiEndpoints('videoFetch');
+        
+        for (const fallbackUrl of fallbackEndpoints) {
+          try {
+            response = await fetch(fallbackUrl, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: requestBody,
+              signal: AbortSignal.timeout(config.timeout)
+            });
+            
+            if (response.ok) {
+              break; // Success with fallback
+            }
+          } catch (fallbackError) {
+            console.warn(`Fallback API ${fallbackUrl} failed:`, fallbackError);
+            continue; // Try next fallback
+          }
+        }
+      }
 
       const data = await response.json();
 
@@ -45,13 +76,17 @@ export const TwitterVideoDownloader: React.FC = () => {
         }, 5000);
       } else {
         setStatusMessage({ 
-          message: data.message || 'Failed to fetch video. Please check the URL and try again.', 
+          message: data.message || `Failed to fetch video (${response.status}). Please check the URL and try again.`, 
           type: 'error' 
         });
       }
     } catch (error) {
       console.error('Error:', error);
-      setStatusMessage({ message: 'Network error. Please try again later.', type: 'error' });
+      if (error instanceof Error && error.name === 'TimeoutError') {
+        setStatusMessage({ message: 'Request timed out. Please try again.', type: 'error' });
+      } else {
+        setStatusMessage({ message: 'Network error. Please try again later.', type: 'error' });
+      }
     } finally {
       setIsLoading(false);
     }

@@ -1,0 +1,12 @@
+{
+  "apiBaseUrl": "https://api.twitter.rhn.world",
+  "fallbackApiUrls": [
+    "https://twitter-api.vercel.app",
+    "https://twitter-downloader-api.herokuapp.com"
+  ],
+  "endpoints": {
+    "videoFetch": "/video/fetch"
+  },
+  "timeout": 30000,
+  "retryAttempts": 3
+} 
