@@ -45,17 +45,20 @@ interface Env {
   DB: D1Database;
   CACHE: KVNamespace;
   VIDEOS: R2Bucket;
+  R2_PUBLIC_URL: string;
 }
 
 export class TrendingVideoService {
   private db: D1Database;
   private kv: KVNamespace;
   private r2: R2Bucket;
+  private r2PublicUrl: string;
 
   constructor(env: Env) {
     this.db = env.DB;
     this.kv = env.CACHE;
     this.r2 = env.VIDEOS;
+    this.r2PublicUrl = env.R2_PUBLIC_URL;
   }
 
   // Extract tweet ID from various Twitter URL formats
@@ -189,8 +192,8 @@ export class TrendingVideoService {
         }
       });
 
-      // Generate public URL (you'll need to configure this based on your R2 setup)
-      const r2PublicUrl = `https://pub-your-account-id.r2.dev/${r2ObjectKey}`;
+      // Generate public URL using environment variable
+      const r2PublicUrl = `${this.r2PublicUrl}/${r2ObjectKey}`;
       
       // Save to database
       const now = new Date().toISOString();

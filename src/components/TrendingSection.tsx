@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TrendingUp, Clock, Eye, Heart, Download, Calendar } from 'lucide-react';
+import { getTrendingEndpoint } from '@/lib/utils';
 
 interface TrendingVideo {
   id: number;
@@ -41,7 +42,13 @@ export const TrendingSection: React.FC = () => {
     setError(null);
     
     try {
-      const response = await fetch(`/trending?period=${period}&limit=20`);
+      const apiUrl = getTrendingEndpoint(period, 20);
+      const response = await fetch(apiUrl);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      }
+      
       const data = await response.json() as ApiResponse;
       
       if (data.success && data.period && data.videos && data.generatedAt) {

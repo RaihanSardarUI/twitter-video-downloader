@@ -51,6 +51,10 @@ export const getApiEndpoint = (endpoint: keyof typeof apiConfig.endpoints): stri
   return `${apiConfig.apiBaseUrl}${apiConfig.endpoints[endpoint]}`;
 };
 
+export const getTrendingEndpoint = (period: string = '24h', limit: number = 20): string => {
+  return `${apiConfig.apiBaseUrl}/trending?period=${period}&limit=${limit}`;
+};
+
 export const getFallbackApiEndpoints = (endpoint: keyof typeof apiConfig.endpoints): string[] => {
   return apiConfig.fallbackApiUrls.map(url => `${url}${apiConfig.endpoints[endpoint]}`);
 };

@@ -5,7 +5,9 @@
     "https://twitter-downloader-api.herokuapp.com"
   ],
   "endpoints": {
-    "videoFetch": "/video/fetch"
+    "videoFetch": "/video/fetch",
+    "trending": "/trending",
+    "stats": "/stats"
   },
   "timeout": 30000,
   "retryAttempts": 3

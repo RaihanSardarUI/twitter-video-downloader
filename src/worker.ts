@@ -4,12 +4,28 @@ interface Env {
   DB: D1Database;
   CACHE: KVNamespace;
   VIDEOS: R2Bucket;
+  R2_PUBLIC_URL: string;
 }
 
 interface VideoFetchRequest {
   url: string;
   is_adult_content: boolean;
   is_non_adult_content: boolean;
+}
+
+interface VideoData {
+  success: boolean;
+  title?: string;
+  uploader?: string;
+  duration_formatted?: string;
+  view_count?: number;
+  like_count?: number;
+  thumbnail?: string;
+  download_url: string;
+  filename?: string;
+  file_size?: number;
+  available_qualities?: any[];
+  message?: string;
 }
 
 export default {
@@ -49,7 +65,7 @@ export default {
 
         try {
           // Call your existing video fetch API
-          const videoData = await fetchVideoData(videoUrl, is_adult_content, is_non_adult_content);
+          const videoData = await fetchVideoData(videoUrl, is_adult_content, is_non_adult_content) as VideoData;
           
           if (!videoData.success) {
             return new Response(JSON.stringify(videoData), {
@@ -66,11 +82,16 @@ export default {
           };
 
           // Handle trending system integration
+          console.log('Processing adult content:', is_adult_content);
+          console.log('Video data received:', { title: videoData.title, url: videoData.download_url });
+          
           const trendingResult = await trendingService.handleVideoDownload(
             { ...videoData, originalUrl: videoUrl }, 
             is_adult_content, 
             userInfo
           );
+
+          console.log('Trending result:', trendingResult);
 
           // Merge results
           const response = {
@@ -82,14 +103,15 @@ export default {
             }
           };
 
-          // If it's a duplicate adult video, use R2 URL
-          if (is_adult_content && trendingResult.isDuplicate) {
+          // If it's adult content, use R2 URL regardless of duplicate status
+          if (is_adult_content && trendingResult.downloadUrl) {
             response.download_url = trendingResult.downloadUrl;
-            response.filename = `trending_video_${trendingResult.downloadCount}.mp4`;
-          } else if (is_adult_content && !trendingResult.isDuplicate) {
-            // New adult video stored in R2
-            response.download_url = trendingResult.downloadUrl;
-            response.filename = `new_trending_video.mp4`;
+            response.filename = trendingResult.isDuplicate 
+              ? `trending_video_${trendingResult.downloadCount}.mp4`
+              : `new_trending_video.mp4`;
+            console.log('Using R2 URL for adult content:', response.download_url);
+          } else if (is_adult_content) {
+            console.error('Adult content selected but no R2 URL returned:', trendingResult);
           }
 
           return new Response(JSON.stringify(response), {
@@ -159,23 +181,34 @@ export default {
   }
 };
 
-// Your existing video fetch function (placeholder - replace with actual implementation)
-async function fetchVideoData(_url: string, _isAdult: boolean, _isNonAdult: boolean) {
-  // This should call your existing Twitter video extraction API
-  // For now, returning a mock response
-  return {
-    success: true,
-    title: "Sample Video",
-    uploader: "Sample User",
-    duration_formatted: "120",
-    view_count: 1000,
-    like_count: 50,
-    thumbnail: "https://example.com/thumb.jpg",
-    download_url: "https://example.com/video.mp4",
-    filename: "video.mp4",
-    file_size: 5000000,
-    available_qualities: []
-  };
+// Fetch video data from your existing Twitter API
+async function fetchVideoData(url: string, isAdult: boolean, isNonAdult: boolean) {
+  try {
+    // Use your existing API endpoint 
+    const apiUrl = 'https://apitest.rdownload.org/twitter/video-fetch';
+    
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: url,
+        is_adult_content: isAdult,
+        is_non_adult_content: isNonAdult
+      })
+    });
+
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error('Error fetching video data:', error);
+    throw error;
+  }
 }
 
 // Get overall statistics
